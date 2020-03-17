@@ -1,22 +1,33 @@
 import React, { useState } from "react";
 
-const [mouseOver, setMouseOver] = useState("false");
 //defino componente de como renderizar cada Tarea con elemento tarea.text
-const handleMouseHover = () => {
-  setMouseOver(true);
-};
 
 export default function Tarea({ tarea, completeTarea, index, removeTarea }) {
+  const [isMouseOver, setMouseOver] = useState("true");
+
+  const handleMouseHover = () => {
+    setMouseOver(false);
+    console.log("MOUSED");
+  };
+
+  const handleMouseOut = () => {
+    setMouseOver(true);
+    console.log("MOUSED_Out");
+  };
+
+  debugger;
   return (
     <div
       className="tarea"
+      style={{
+        backgroundColor: isMouseOver ? "darkgrey" : "cornflowerblue",
+        textDecoration: tarea.isCompleted ? "line-through" : ""
+      }}
       onMouseOver={handleMouseHover}
-      style={
-        ({ textDecoration: tarea.isCompleted ? "line-through" : "" },
-        { backgroundColor: mouseOver ? "grey" : "" })
-      }
+      onMouseOut={handleMouseOut}
     >
       {tarea.text}
+
       <div>
         <button onClick={() => completeTarea(index)}> Completada!</button>
         <button onClick={() => removeTarea(index)}> Eliminar!</button>

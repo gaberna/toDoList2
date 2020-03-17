@@ -12,7 +12,7 @@ function App() {
     { text: "Armar un mate", isCompleted: false }
   ]);
 
-  const [buddyName, setBuddyName] = useState("buddy");
+  const [buddyName, setBuddyName] = useState("");
 
   const now = new Date().toLocaleTimeString();
 
@@ -51,28 +51,52 @@ function App() {
   //con .map por cada elemento de tareas recorro el array agrego index y se lo paso al component Tarea
   return (
     <div className="app">
-      <h1>Hello {buddyName}</h1>
-
-      <input
-        type="text"
-        placeholder="put your name"
-        onChange={handleInputChange}
-      ></input>
-      <br></br>
-      <div className="tarea-list">
-        {tareas.map((tarea, index) => (
-          <Tarea
-            key={index}
-            index={index}
-            tarea={tarea}
-            completeTarea={completeTarea}
-            removeTarea={removeTarea}
-          />
-        ))}
+      <div class="container">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">
+            <input
+              type="text"
+              placeholder="your name to start!"
+              onChange={handleInputChange}
+            ></input>
+            <h1>
+              Hello {buddyName}
+              <br></br>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary">
+                  Left
+                </button>
+                <button type="button" class="btn btn-secondary">
+                  Middle
+                </button>
+                <button type="button" class="btn btn-secondary">
+                  Right
+                </button>
+              </div>
+            </h1>
+            <div className="tarea-list">
+              {tareas.map((tarea, index) => (
+                <Tarea
+                  key={index}
+                  index={index}
+                  tarea={tarea}
+                  completeTarea={completeTarea}
+                  removeTarea={removeTarea}
+                />
+              ))}
+            </div>
+            <br></br>
+            <TareaForm addTarea={addTarea} />
+            <br></br>
+            <div className="time">
+              <button onClick={updateTime}>Refresh TIME</button>
+              {time}
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
       </div>
-      <TareaForm addTarea={addTarea} />
-      <div className="time">{time}</div>
-      <button onClick={updateTime}>Refresh TIME</button>
     </div>
   );
 }
