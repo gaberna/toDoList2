@@ -17,7 +17,7 @@ export default function TareaForm({ addTarea }) {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Ingresá tu tarea."
+          placeholder="Ingresá tu tarea...."
           className="input"
           value={newTarea}
           onChange={e => setNewTarea(e.target.value)}

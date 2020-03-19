@@ -15,7 +15,7 @@ export default function Tarea({ tarea, completeTarea, index, removeTarea }) {
     console.log("MOUSED_Out");
   };
 
-  debugger;
+  //debugger;
   return (
     <div
       className="tarea"

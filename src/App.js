@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import "./App.css";
 import Tarea from "./Tarea";
 import TareaForm from "./TareaForm";
-import cars from "./data.js";
+import Buscar from "./Buscar";
 
 function App() {
   //defino estado de tareas y setTareas con useState([array inicial de tareas])
+
   const [tareas, setTareas] = useState([
-    { text: "Estudiar React", isCompleted: false },
-    { text: "Limpiar los pisos", isCompleted: false },
-    { text: "Armar un mate", isCompleted: false }
+    { text: "Estudiar React", isCompleted: false, filtro: 0 },
+    { text: "Limpiar los pisos", isCompleted: true, filtro: 0 },
+    { text: "Armar un mate", isCompleted: false, filtro: 0 }
   ]);
+
+  const [filtro, setFiltro] = useState("0");
 
   const [buddyName, setBuddyName] = useState("");
 
@@ -29,10 +32,14 @@ function App() {
     setTareas(newTareas);
   };
 
+  const valBuscado = value => {
+    console.log("app value", value);
+  };
+
   //funcion para cambiar estado de tarea a completada
   const completeTarea = index => {
     const newTareas = [...tareas];
-    debugger;
+    //debugger;
     newTareas[index].isCompleted = true;
     setTareas(newTareas);
   };
@@ -46,15 +53,26 @@ function App() {
 
   const handleInputChange = e => {
     setBuddyName(e.target.value);
+    setTareas(tareas);
+  };
+
+  const handleSelect = e => {
+    // const selectedOpt = e.target.value;
+    // const newTareas = [...tareas];
+    // newTareas.map((tarea, index) => (tarea.filtro = selectedOpt));
+    // setTareas(newTareas);
+    setFiltro(e.target.value);
+
+    debugger;
   };
 
   //con .map por cada elemento de tareas recorro el array agrego index y se lo paso al component Tarea
   return (
     <div className="app">
-      <div class="container">
-        <div class="row">
-          <div class="col"></div>
-          <div class="col">
+      <div className="container">
+        <div className="row">
+          <div className="col"></div>
+          <div className="col">
             <input
               type="text"
               placeholder="your name to start!"
@@ -63,28 +81,54 @@ function App() {
             <h1>
               Hello {buddyName}
               <br></br>
-              <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary">
-                  Left
+              <div
+                className="btn-group"
+                role="group"
+                aria-label="Basic example"
+              >
+                <button
+                  onClick={handleSelect}
+                  value="0"
+                  type="button"
+                  className="btn btn-secondary"
+                >
+                  Todas
                 </button>
-                <button type="button" class="btn btn-secondary">
-                  Middle
+                <button
+                  onClick={handleSelect}
+                  type="button"
+                  value="1"
+                  className="btn btn-secondary"
+                >
+                  Pendientes
                 </button>
-                <button type="button" class="btn btn-secondary">
-                  Right
+                <button
+                  onClick={handleSelect}
+                  type="button"
+                  value="2"
+                  className="btn btn-secondary"
+                >
+                  Terminadas
                 </button>
               </div>
             </h1>
             <div className="tarea-list">
-              {tareas.map((tarea, index) => (
-                <Tarea
-                  key={index}
-                  index={index}
-                  tarea={tarea}
-                  completeTarea={completeTarea}
-                  removeTarea={removeTarea}
-                />
-              ))}
+              {tareas
+                .filter(
+                  tarea =>
+                    (!tarea.isCompleted && filtro === "1") ||
+                    (tarea.isCompleted && filtro === "2") ||
+                    filtro === "0"
+                )
+                .map((tarea, index) => (
+                  <Tarea
+                    key={index}
+                    index={index}
+                    tarea={tarea}
+                    completeTarea={completeTarea}
+                    removeTarea={removeTarea}
+                  />
+                ))}
             </div>
             <br></br>
             <TareaForm addTarea={addTarea} />
@@ -94,7 +138,9 @@ function App() {
               {time}
             </div>
           </div>
-          <div class="col"></div>
+          <div className="col">
+            <Buscar onChange={valBuscado} />
+          </div>
         </div>
       </div>
     </div>

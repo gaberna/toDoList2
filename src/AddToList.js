@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 const [value, setValue] = useState("");
 
-function handleChange(evt) {
-  console.log("new value", evt.target.value);
-  setValue(evt.target.value);
+function handleChange(e) {
+  console.log("new value", e.target.value);
+  setValue(e.target.value);
 }
 
 export default () => {
